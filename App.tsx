@@ -1,15 +1,15 @@
 
 import React, { useState } from 'react';
-import { Navbar } from './components/Navbar';
-import { Hero } from './components/Hero';
-import { About } from './components/About';
-import { Portfolio } from './components/Portfolio';
-import { Documentation } from './components/Documentation';
-import { Experience } from './components/Experience';
-import { Skills } from './components/Skills';
-import { Footer } from './components/Footer';
-import { PRDModal } from './components/PRDModal';
-import { CaseStudy } from './types';
+import { Navbar } from './components/Navbar.tsx';
+import { Hero } from './components/Hero.tsx';
+import { About } from './components/About.tsx';
+import { Portfolio } from './components/Portfolio.tsx';
+import { Documentation } from './components/Documentation.tsx';
+import { Experience } from './components/Experience.tsx';
+import { Skills } from './components/Skills.tsx';
+import { Footer } from './components/Footer.tsx';
+import { PRDModal } from './components/PRDModal.tsx';
+import { CaseStudy } from './types.ts';
 
 const App: React.FC = () => {
   const [selectedCaseStudy, setSelectedCaseStudy] = useState<CaseStudy | null>(null);

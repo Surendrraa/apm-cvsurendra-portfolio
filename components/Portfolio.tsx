@@ -1,9 +1,8 @@
 
-// Add missing React import
 import React from 'react';
-import { CASE_STUDIES } from '../constants';
-import { SectionHeading } from './SectionHeading';
-import { CaseStudy } from '../types';
+import { CASE_STUDIES } from '../constants.tsx';
+import { SectionHeading } from './SectionHeading.tsx';
+import { CaseStudy } from '../types.ts';
 
 interface Props {
   onSelectCaseStudy: (study: CaseStudy) => void;
