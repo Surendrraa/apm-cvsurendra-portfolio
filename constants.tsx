@@ -77,7 +77,7 @@ export const DOCUMENTATION_RESOURCES = [
   },
   {
     title: 'Priority Matrix & Roadmap',
-    description: 'RICE scoring models and priority listings for product roadmapping, balancing impact against technical effort.',
+    description: 'RICE scoring models and priority listings for strategic product roadmapping, balancing business impact against technical feasibility and resource effort to ensure maximum ROI and alignment.',
     links: [
       { label: 'Priority Sheet', url: 'https://www.notion.so/Feature-Prioritization-Document-2d93d7a7290480cda963e3e9cf81a9e7?source=copy_link' }
     ],
