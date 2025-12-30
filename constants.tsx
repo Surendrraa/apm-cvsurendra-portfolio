@@ -129,6 +129,14 @@ export const SKILLS: Skill[] = [
   },
   { 
     category: 'Technical Toolkit', 
-    items: ['Figma', 'Jira', 'Notion', 'Mixpanel', 'SQL'] 
+    items: ['Excel', 'Cursor AI', 'SQL', 'VibeKoding', 'Anti Gravity', 'Figma', 'Jira', 'Notion', 'Mixpanel'] 
+  },
+  {
+    category: 'Career Skills',
+    items: ['Problem Solving', 'Critical Thinking & Leadership', 'Teamwork & Collaboration', 'Research & Analysis', 'Ownership mindset', 'Decision making']
+  },
+  {
+    category: 'Area of Interest',
+    items: ['Technical Product Design', 'SaaS products', 'AI-based products', 'Workflow automation', 'EdTech Innovation']
   }
 ];
