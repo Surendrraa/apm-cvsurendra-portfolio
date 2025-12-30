@@ -125,7 +125,8 @@
           script.src = entryBlobUrl;
           document.head.appendChild(script);
         } catch (err) {
-          document.getElementById('loader-icon').style.display = 'none';
+          const loaderIcon = document.getElementById('loader-icon');
+          if (loaderIcon) loaderIcon.style.display = 'none';
           const statusText = document.getElementById('status-text');
           if (statusText) statusText.innerText = "Boot Failed";
           const errorBox = document.getElementById('error-box');

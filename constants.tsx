@@ -1,4 +1,3 @@
-
 import { CaseStudy, Experience, Skill } from './types';
 
 export const PROFESSIONAL_SUMMARY = `Associate Product Manager–aspirant with 1.6 years of experience in a software product environment as an Associate QA Engineer at Vegastack. Strong exposure to product requirements, user stories, acceptance criteria, Agile execution, and cross-functional collaboration. Complements professional experience with hands-on product building as the Product Lead for VibeKodes, demonstrating real-world product thinking, user focus, and ownership mindset.`;
@@ -69,7 +68,7 @@ export const DOCUMENTATION_RESOURCES = [
     icon: 'figma'
   },
   {
-    title: 'Project-Requirements-Specifications-Documentation',
+    title: 'Project-Requirements-Specifications - Doc',
     description: 'Comprehensive Product Requirement Documents (PRDs) covering functional specs, user personas, and edge case management.',
     links: [
       { label: 'View Notion PRD', url: 'https://www.notion.so/Project-Requirements-Specifications-Documentation-2d93d7a72904801d9343f266de0defe5?source=copy_link' }
@@ -81,6 +80,14 @@ export const DOCUMENTATION_RESOURCES = [
     description: 'RICE scoring models and priority listings for product roadmapping, balancing impact against technical effort.',
     links: [
       { label: 'Priority Sheet', url: 'https://www.notion.so/Feature-Prioritization-Document-2d93d7a7290480cda963e3e9cf81a9e7?source=copy_link' }
+    ],
+    icon: 'priority'
+  },
+  {
+    title: 'Food Delivery App KPIs',
+    description: 'Strategic analysis of success metrics for food delivery platforms, focusing on order frequency, logistics efficiency, and retention.',
+    links: [
+      { label: 'View KPI Document', url: 'https://www.notion.so/Food-Delivery-App-KPIs-2d93d7a72904804fb5a8f5bfdd39ba53?source=copy_link' }
     ],
     icon: 'priority'
   }
