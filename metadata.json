@@ -1,0 +1,7 @@
+{
+  "name": "APM Portfolio - Aspiring Product Leader",
+  "description": "A high-end professional portfolio for an Associate Product Manager with experience in startups and feature innovation.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
