@@ -8,15 +8,17 @@ import { Experience } from './components/Experience.tsx';
 import { Skills } from './components/Skills.tsx';
 import { Footer } from './components/Footer.tsx';
 import { PRDModal } from './components/PRDModal.tsx';
+import { BackgroundSnake } from './components/BackgroundSnake.tsx';
 import { CaseStudy } from './types.ts';
 
 const App: React.FC = () => {
   const [selectedCaseStudy, setSelectedCaseStudy] = useState<CaseStudy | null>(null);
 
   return (
-    <div className="min-h-screen selection:bg-violet-500/30">
+    <div className="relative min-h-screen selection:bg-violet-500/30 bg-[#09090b]">
+      <BackgroundSnake />
       <Navbar />
-      <main className="space-y-0">
+      <main className="relative z-10 space-y-0">
         <Hero />
         <About />
         <Portfolio onSelectCaseStudy={setSelectedCaseStudy} />
