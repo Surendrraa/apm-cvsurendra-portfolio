@@ -119,7 +119,16 @@ export const EXPERIENCES: Experience[] = [
 ];
 
 export const SKILLS: Skill[] = [
-  { category: 'Product Strategy', items: ['PRD Writing', 'User Research', 'Strategic Discovery', 'Wireframing'] },
-  { category: 'Execution', items: ['Agile Methodologies', 'Requirement Analysis', 'Acceptance Criteria', 'QA Auditing'] },
-  { category: 'Technical Toolkit', items: ['Figma', 'Jira', 'Notion', 'Mixpanel', 'SQL', 'API Testing'] }
+  { 
+    category: 'Product Strategy', 
+    items: ['PRD Writing', 'User Research', 'Strategic Discovery', 'Wireframing', 'Market Analysis'] 
+  },
+  { 
+    category: 'Execution', 
+    items: ['Agile Methodologies', 'Requirement Analysis', 'Acceptance Criteria', 'QA Auditing', 'Prioritization'] 
+  },
+  { 
+    category: 'Technical Toolkit', 
+    items: ['Figma', 'Jira', 'Notion', 'Mixpanel', 'SQL'] 
+  }
 ];
