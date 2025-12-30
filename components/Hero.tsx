@@ -20,7 +20,7 @@ export const Hero: React.FC = () => {
   };
 
   return (
-    <section className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
+    <section className="pt-32 md:pt-48 pb-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto text-center md:text-left grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <div>
           <div className="inline-flex items-center space-x-2 bg-violet-500/10 border border-violet-500/20 px-3 py-1 rounded-full mb-6">

@@ -1,10 +1,23 @@
-
 import { GoogleGenAI } from "@google/genai";
 import { PROFESSIONAL_SUMMARY, CASE_STUDIES, EXPERIENCES, SKILLS } from '../constants';
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// Helper to get AI instance safely
+const getAiClient = () => {
+  const apiKey = process.env.API_KEY;
+  if (!apiKey) {
+    console.warn("API_KEY is not defined in process.env. Chat features may be limited.");
+    return null;
+  }
+  return new GoogleGenAI({ apiKey });
+};
+
+const ai = getAiClient();
 
 export async function getPortfolioResponse(prompt: string) {
+  if (!ai) {
+    return "I'm currently operating in offline mode as my AI core is being calibrated. Please check back shortly!";
+  }
+
   try {
     const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",

@@ -87,10 +87,12 @@
     </div>
 
     <script type="text/javascript">
-      window.process = { env: { NODE_ENV: 'production' } };
+      // Ensure process.env is safely initialized before any module runs
+      window.process = window.process || { env: {} };
+      window.process.env = window.process.env || {};
+      window.process.env.NODE_ENV = window.process.env.NODE_ENV || 'production';
 
       const moduleCache = new Map();
-      
       const projectFiles = [
         'index.tsx', 'App.tsx', 'types.ts', 'constants.tsx',
         'components/Navbar.tsx', 'components/Hero.tsx', 'components/About.tsx',
@@ -102,6 +104,11 @@
         'services/geminiService.ts'
       ];
 
+      // Robust base URL detection for GitHub Pages
+      const baseDir = window.location.pathname.endsWith('/') 
+        ? window.location.origin + window.location.pathname 
+        : window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1);
+
       function resolvePath(base, relative) {
         return new URL(relative, base).href;
       }
@@ -109,22 +116,20 @@
       function getCorrectExtension(path) {
         if (/\.(tsx|ts|js)$/.test(path)) return path;
         
-        const cleanPath = path.replace(/^\.\//, '').replace(/^\.\.\//, '');
-        
+        const cleanPath = path.replace(/^(\.\.\/|\.\/)+/, '');
         const match = projectFiles.find(f => {
           const fName = f.replace(/\.(tsx|ts)$/, '');
           return fName === cleanPath || fName.endsWith('/' + cleanPath);
         });
 
         if (match) {
-          const ext = match.endsWith('.tsx') ? '.tsx' : '.ts';
-          return path + (ext.startsWith('.') ? ext : '.' + ext);
+          return path + (match.endsWith('.tsx') ? '.tsx' : '.ts');
         }
         return path;
       }
 
       async function loadModule(url) {
-        const absoluteUrl = new URL(url, window.location.href).href;
+        const absoluteUrl = new URL(url, baseDir).href;
         if (moduleCache.has(absoluteUrl)) return moduleCache.get(absoluteUrl);
 
         let resolveBlob;
@@ -132,13 +137,15 @@
         moduleCache.set(absoluteUrl, promise);
 
         try {
-          const response = await fetch(absoluteUrl);
+          // Add cache-busting version query string
+          const fetchUrl = absoluteUrl + '?v=' + Date.now();
+          const response = await fetch(fetchUrl);
+          
           if (!response.ok) throw new Error(`Fetch Failed: ${url} (Status: ${response.status})`);
           let code = await response.text();
 
           const importRegex = /(from|import)\s+['"](\.\.?\/[^'"]+)['"]/g;
           const matches = [...code.matchAll(importRegex)];
-          
           const sortedMatches = matches.sort((a, b) => b.index - a.index);
           
           for (const match of sortedMatches) {
@@ -172,6 +179,7 @@
 
       (async () => {
         try {
+          console.log("Initializing Portfolio Engine...");
           const entryBlobUrl = await loadModule('./index.tsx');
           const script = document.createElement('script');
           script.type = 'module';
@@ -185,9 +193,9 @@
           const errorBox = document.getElementById('error-box');
           if (errorBox) {
             errorBox.style.display = 'block';
-            errorBox.innerText = `${err.message}\n\nStack: ${err.stack || 'N/A'}`;
+            errorBox.innerText = `[Engine Error]: ${err.message}\n\nTrace: ${err.stack || 'No trace available'}`;
           }
-          console.error("Boot error:", err);
+          console.error("Portfolio Boot error:", err);
         }
       })();
     </script>
