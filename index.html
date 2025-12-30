@@ -66,6 +66,14 @@
       }
 
       /**
+       * Checks if a path has a valid file extension
+       */
+      function hasExtension(path) {
+        const lastPart = path.split('/').pop();
+        return lastPart.includes('.');
+      }
+
+      /**
        * Recursively loads and transpiles modules
        */
       async function loadModule(url) {
@@ -81,22 +89,42 @@
         }
         let code = await response.text();
 
-        // 2. Resolve internal imports (using callback replace for robustness)
-        // Matches: import ... from './path.tsx' or export ... from './path.tsx'
+        // 2. Resolve internal imports
+        // Matches: import ... from './path' or export ... from './path'
         const importRegex = /(from|import)\s+['"](\.\.?\/[^'"]+)['"]/g;
         
         // Find all local imports and process them first
         const localImports = [...code.matchAll(importRegex)];
         for (const match of localImports) {
           const originalPath = match[2];
-          // Append .tsx if extension is missing (standard dev behavior)
-          const targetPath = originalPath.includes('.') ? originalPath : `${originalPath}.tsx`;
+          
+          // Fix: Handle cases like '../constants' where dots are at the start
+          // but there's no actual file extension at the end.
+          let targetPath = originalPath;
+          if (!hasExtension(originalPath)) {
+            // Attempt .tsx first, as most files in this project are .tsx
+            targetPath = `${originalPath}.tsx`;
+          }
+
           const resolvedAbsolute = resolvePath(absoluteUrl, targetPath);
           
-          const blobUrl = await loadModule(resolvedAbsolute);
-          // Replace the path in the code with the Blob URL
-          code = code.split(`'${originalPath}'`).join(`'${blobUrl}'`);
-          code = code.split(`"${originalPath}"`).join(`"${blobUrl}"`);
+          try {
+            const blobUrl = await loadModule(resolvedAbsolute);
+            // Replace the path in the code with the Blob URL
+            code = code.split(`'${originalPath}'`).join(`'${blobUrl}'`);
+            code = code.split(`"${originalPath}"`).join(`"${blobUrl}"`);
+          } catch (e) {
+            // Fallback: If .tsx fails, try .ts
+            if (targetPath.endsWith('.tsx')) {
+               const tsPath = targetPath.replace('.tsx', '.ts');
+               const resolvedTs = resolvePath(absoluteUrl, tsPath);
+               const blobUrl = await loadModule(resolvedTs);
+               code = code.split(`'${originalPath}'`).join(`'${blobUrl}'`);
+               code = code.split(`"${originalPath}"`).join(`"${blobUrl}"`);
+            } else {
+               throw e;
+            }
+          }
         }
 
         if (status) status.innerText = `Transpiling: ${url.split('/').pop()}`;
@@ -147,7 +175,7 @@
           }
           if (errorBox) {
             errorBox.style.display = 'block';
-            errorBox.innerText = `Error Stack:\n${err.message}\n\nCheck console for full trace.`;
+            errorBox.innerText = `Error Context:\n${err.message}\n\nThis usually happens because an import path is incorrect or a file is missing. Check the network tab in dev tools.`;
           }
         }
       })();
