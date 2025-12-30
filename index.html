@@ -51,7 +51,6 @@
 
       const moduleCache = new Map();
       
-      // Explicit list of files to help the loader find extensions
       const projectFiles = [
         'index.tsx', 'App.tsx', 'types.ts', 'constants.tsx',
         'components/Navbar.tsx', 'components/Hero.tsx', 'components/About.tsx',
@@ -66,12 +65,10 @@
       }
 
       function getCorrectExtension(path) {
-        // If it already has an extension, don't touch it
         if (/\.(tsx|ts|js)$/.test(path)) return path;
         
         const cleanPath = path.replace(/^\.\//, '').replace(/^\.\.\//, '');
         
-        // Find match in projectFiles that either equals the path or ends with it
         const match = projectFiles.find(f => {
           const fName = f.replace(/\.(tsx|ts)$/, '');
           return fName === cleanPath || fName.endsWith('/' + cleanPath);
@@ -87,9 +84,6 @@
       async function loadModule(url) {
         const absoluteUrl = new URL(url, window.location.href).href;
         if (moduleCache.has(absoluteUrl)) return moduleCache.get(absoluteUrl);
-
-        const status = document.getElementById('status-text');
-        if (status) status.innerText = `Loading: ${url.split('/').pop()}`;
 
         const response = await fetch(absoluteUrl);
         if (!response.ok) throw new Error(`Fetch Failed: ${url} (Status: ${response.status})`);
@@ -132,9 +126,13 @@
           document.head.appendChild(script);
         } catch (err) {
           document.getElementById('loader-icon').style.display = 'none';
-          document.getElementById('status-text').innerText = "Boot Failed";
-          document.getElementById('error-box').style.display = 'block';
-          document.getElementById('error-box').innerText = err.message;
+          const statusText = document.getElementById('status-text');
+          if (statusText) statusText.innerText = "Boot Failed";
+          const errorBox = document.getElementById('error-box');
+          if (errorBox) {
+            errorBox.style.display = 'block';
+            errorBox.innerText = err.message;
+          }
         }
       })();
     </script>
