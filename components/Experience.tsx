@@ -1,7 +1,7 @@
 
 import React from 'react';
-import { EXPERIENCES } from '../constants';
-import { SectionHeading } from './SectionHeading';
+import { EXPERIENCES } from '../constants.tsx';
+import { SectionHeading } from './SectionHeading.tsx';
 
 export const Experience: React.FC = () => {
   return (

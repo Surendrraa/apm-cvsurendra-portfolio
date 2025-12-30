@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { PROFESSIONAL_SUMMARY } from '../constants';
+import { PROFESSIONAL_SUMMARY } from '../constants.tsx';
 
 export const About: React.FC = () => {
   return (

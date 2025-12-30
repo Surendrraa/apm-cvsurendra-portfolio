@@ -1,7 +1,7 @@
 
 import React from 'react';
-import { DOCUMENTATION_RESOURCES } from '../constants';
-import { SectionHeading } from './SectionHeading';
+import { DOCUMENTATION_RESOURCES } from '../constants.tsx';
+import { SectionHeading } from './SectionHeading.tsx';
 
 export const Documentation: React.FC = () => {
   const getIcon = (type: string) => {

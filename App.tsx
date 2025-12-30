@@ -9,7 +9,6 @@ import { Experience } from './components/Experience.tsx';
 import { Skills } from './components/Skills.tsx';
 import { Footer } from './components/Footer.tsx';
 import { PRDModal } from './components/PRDModal.tsx';
-import { ChatBot } from './components/ChatBot.tsx';
 import { CaseStudy } from './types.ts';
 
 const App: React.FC = () => {
@@ -27,7 +26,6 @@ const App: React.FC = () => {
         <Skills />
       </main>
       <Footer />
-      <ChatBot />
       
       {selectedCaseStudy && (
         <PRDModal 
