@@ -77,14 +77,6 @@ export const DOCUMENTATION_RESOURCES = [
     icon: 'prd'
   },
   {
-    title: 'Feature Listing & Discovery',
-    description: 'Structured discovery logs and feature categorization by user segment, technical feasibility, and strategic alignment.',
-    links: [
-      { label: 'Feature List', url: '#' }
-    ],
-    icon: 'list'
-  },
-  {
     title: 'Priority Matrix & Roadmap',
     description: 'RICE scoring models and priority listings for product roadmapping, balancing impact against technical effort.',
     links: [
