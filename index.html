@@ -10,21 +10,66 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Babel for runtime transpilation -->
+    <!-- SystemJS & Babel for runtime transpilation -->
+    <script src="https://cdn.jsdelivr.net/npm/systemjs@6.15.1/dist/system.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-    <script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@19.0.0",
-    "react-dom": "https://esm.sh/react-dom@19.0.0",
-    "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
-    "@google/genai": "https://esm.sh/@google/genai@1.34.0",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react/": "https://esm.sh/react@^19.2.3/"
-  }
-}
-</script>
+    <!-- SystemJS Import Map (Used instead of native importmap for TSX support) -->
+    <script type="systemjs-importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh/react@19.0.0",
+        "react-dom": "https://esm.sh/react-dom@19.0.0",
+        "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
+        "@google/genai": "https://esm.sh/@google/genai@1.34.0"
+      }
+    }
+    </script>
+
+    <script>
+      // 1. Shim process.env for the browser (Required for libraries like @google/genai)
+      window.process = window.process || { env: { NODE_ENV: 'production' } };
+
+      // 2. Configure Babel to transform JSX/TS into SystemJS modules
+      Babel.registerPreset('apm-app', {
+        presets: [
+          [Babel.availablePresets['typescript'], { isTSX: true, allExtensions: true }],
+          [Babel.availablePresets['react'], { runtime: 'automatic' }]
+        ],
+        plugins: [
+          [Babel.availablePlugins['transform-modules-systemjs']]
+        ]
+      });
+
+      // 3. Intercept fetch to transpile .tsx files on the fly
+      const originalFetch = System.constructor.prototype.fetch;
+      System.constructor.prototype.fetch = async function(url, options) {
+        const response = await fetch(url, options);
+        if (!response.ok) return response;
+
+        // Only transpile local .tsx and .ts files
+        const isLocalSource = (url.endsWith('.tsx') || url.endsWith('.ts')) && !url.includes('esm.sh');
+        if (!isLocalSource) return response;
+
+        const source = await response.text();
+        try {
+          const transformed = Babel.transform(source, {
+            presetName: 'apm-app',
+            filename: url
+          }).code;
+
+          return new Response(transformed, {
+            headers: { 'Content-Type': 'application/javascript' }
+          });
+        } catch (err) {
+          console.error(`Babel Transpilation Error in ${url}:`, err);
+          // Show error on screen if it's a critical file
+          const status = document.getElementById('status-text');
+          if (status) status.innerText = "Syntax Error in " + url.split('/').pop();
+          throw err;
+        }
+      };
+    </script>
 
     <style>
         body { margin: 0; background-color: #09090b; color: #fafafa; font-family: 'Inter', sans-serif; overflow-x: hidden; }
@@ -34,71 +79,44 @@
         ::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
         @keyframes spin { to { transform: rotate(360deg); } }
     </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.34.0"
+  }
+}
+</script>
 </head>
 <body>
     <div id="root">
         <div id="loading-screen" style="height: 100vh; display: flex; align-items: center; justify-content: center; background: #09090b; color: #fafafa;">
-            <div style="text-align: center;">
-                <div style="width: 44px; height: 44px; border: 3px solid #1a1a1a; border-top-color: #8B5CF6; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 24px;"></div>
-                <p id="status-text" style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: #52525b;">Initializing Modules...</p>
+            <div style="text-align: center; padding: 20px;">
+                <div id="loader-icon" style="width: 44px; height: 44px; border: 3px solid #1a1a1a; border-top-color: #8B5CF6; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 24px;"></div>
+                <p id="status-text" style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: #52525b;">Initial Load...</p>
+                <div id="error-box" style="display: none; margin-top: 20px; color: #f87171; font-size: 12px; max-width: 300px; word-wrap: break-word;"></div>
             </div>
         </div>
     </div>
 
-    <script type="text/javascript">
-      // 1. Shim process for the Gemini SDK
-      window.process = { env: { NODE_ENV: 'production' } };
+    <script>
+      // Start the application
+      const status = document.getElementById('status-text');
+      const errorBox = document.getElementById('error-box');
+      const loaderIcon = document.getElementById('loader-icon');
 
-      // 2. Custom Loader to bypass MIME type issues on GitHub Pages
-      async function loadModule(url) {
-        const response = await fetch(url);
-        if (!response.ok) throw new Error(`Failed to fetch ${url}`);
-        let code = await response.text();
-        
-        // Transpile TSX/TS to JS
-        const transformed = Babel.transform(code, {
-          presets: ['react', ['typescript', { isTSX: true, allExtensions: true }]],
-          filename: url
-        }).code;
-
-        // Convert relative imports (e.g., ./App.tsx) to work with this loader
-        // This is a simple regex for demo purposes; handles standard relative imports
-        const blob = new Blob([transformed], { type: 'application/javascript' });
-        return URL.createObjectURL(blob);
-      }
-
-      // 3. Bootstrapping the application
-      (async () => {
-        const status = document.getElementById('status-text');
-        try {
-          status.innerText = "Transpiling Source...";
-          
-          // We fetch index.tsx, transpile it, and inject it as a module
-          const code = await fetch('./index.tsx').then(r => r.text());
-          const transpiled = Babel.transform(code, {
-            presets: ['react', ['typescript', { isTSX: true, allExtensions: true }]],
-            filename: 'index.tsx'
-          }).code;
-
-          // Replace local file imports with blob URLs or just let the browser resolve if we use absolute paths
-          // In this specific setup, since all files are in the same dir, we can help Babel/Browser
-          const script = document.createElement('script');
-          script.type = 'module';
-          script.text = transpiled;
-          document.head.appendChild(script);
-          
-          console.log("App injected successfully");
-        } catch (err) {
-          console.error("Boot Error:", err);
-          document.getElementById('root').innerHTML = `
-            <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh; padding:20px; color:#f87171; font-family:sans-serif; text-align:center;">
-              <h1 style="font-size:18px; font-weight:bold; margin-bottom:8px;">Load Error</h1>
-              <p style="font-size:14px; opacity:0.7; max-width:400px;">${err.message}</p>
-              <button onclick="window.location.reload()" style="margin-top:24px; padding:10px 20px; background:#27272a; color:white; border:none; border-radius:8px; cursor:pointer;">Retry</button>
-            </div>
-          `;
-        }
-      })();
+      status.innerText = "Transpiling Components...";
+      
+      System.import('./index.tsx').catch(err => {
+        console.error('SystemJS Import Error:', err);
+        loaderIcon.style.display = 'none';
+        status.innerText = "Failed to Boot";
+        status.style.color = "#f87171";
+        errorBox.style.display = 'block';
+        errorBox.innerText = err.message || "Unknown Error. Check console for details.";
+      });
     </script>
 </body>
 </html>
