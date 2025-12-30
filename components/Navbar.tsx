@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 export const Navbar: React.FC = () => {
@@ -30,13 +29,29 @@ export const Navbar: React.FC = () => {
                 CV Surendra Portfolio
               </span>
             </div>
-            <div className="hidden md:flex items-center space-x-8">
-              <a href="#about" onClick={scrollToSection('about')} className="text-zinc-400 hover:text-white transition-colors text-sm font-medium">About</a>
-              <a href="#work" onClick={scrollToSection('work')} className="text-zinc-400 hover:text-white transition-colors text-sm font-medium">Portfolio</a>
-              <a href="#docs" onClick={scrollToSection('docs')} className="text-zinc-400 hover:text-white transition-colors text-sm font-medium">Docs</a>
-              <a href="#experience" onClick={scrollToSection('experience')} className="text-zinc-400 hover:text-white transition-colors text-sm font-medium">Experience</a>
-              <a href="#skills" onClick={scrollToSection('skills')} className="text-zinc-400 hover:text-white transition-colors text-sm font-medium">Skills</a>
-              <a href="#contact" onClick={scrollToSection('contact')} className="text-white bg-[#8B5CF6] hover:bg-[#7C3AED] transition-colors text-sm font-bold px-6 py-2 rounded-full shadow-lg shadow-violet-500/20">Contact</a>
+            <div className="hidden md:flex items-center space-x-4 lg:space-x-6">
+              <a href="#about" onClick={scrollToSection('about')} className="text-zinc-400 hover:text-white transition-colors text-xs font-bold uppercase tracking-widest">About</a>
+              <a href="#work" onClick={scrollToSection('work')} className="text-zinc-400 hover:text-white transition-colors text-xs font-bold uppercase tracking-widest">Portfolio</a>
+              
+              <a 
+                href="#vibekodes" 
+                onClick={scrollToSection('vibekodes')} 
+                className="group relative px-4 py-2 bg-violet-600/10 border border-violet-600/20 rounded-xl transition-all hover:bg-violet-600/20"
+              >
+                <span className="text-violet-400 group-hover:text-violet-300 text-xs font-black uppercase tracking-[0.15em] flex items-center gap-2">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-violet-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-violet-500"></span>
+                  </span>
+                  VibeKodes
+                </span>
+                <div className="absolute inset-0 bg-violet-600/5 blur-xl group-hover:bg-violet-600/10 transition-all rounded-xl -z-10"></div>
+              </a>
+
+              <a href="#docs" onClick={scrollToSection('docs')} className="text-zinc-400 hover:text-white transition-colors text-xs font-bold uppercase tracking-widest">Docs</a>
+              <a href="#experience" onClick={scrollToSection('experience')} className="text-zinc-400 hover:text-white transition-colors text-xs font-bold uppercase tracking-widest">Experience</a>
+              <a href="#skills" onClick={scrollToSection('skills')} className="text-zinc-400 hover:text-white transition-colors text-xs font-bold uppercase tracking-widest">Skills</a>
+              <a href="#contact" onClick={scrollToSection('contact')} className="text-white bg-[#8B5CF6] hover:bg-[#7C3AED] transition-colors text-xs font-black uppercase tracking-widest px-6 py-2 rounded-full shadow-lg shadow-violet-500/20 ml-2">Contact</a>
             </div>
           </div>
         </div>

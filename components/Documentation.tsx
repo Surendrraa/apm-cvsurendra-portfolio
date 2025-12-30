@@ -52,20 +52,20 @@ export const Documentation: React.FC = () => {
               <div className="w-12 h-12 bg-violet-500/10 rounded-2xl flex items-center justify-center text-violet-500 mb-6 group-hover:bg-[#8B5CF6] group-hover:text-white transition-all">
                 {getIcon(doc.icon)}
               </div>
-              <h4 className="text-xl font-bold text-white mb-3">{doc.title}</h4>
-              <p className="text-sm text-zinc-500 leading-relaxed mb-8">{doc.description}</p>
-              <div className="flex flex-wrap gap-3">
+              <h4 className="text-xl font-black text-white mb-4 tracking-tight leading-tight italic">{doc.title}</h4>
+              <p className="text-sm text-zinc-400 leading-relaxed mb-10 font-medium">{doc.description}</p>
+              <div className="flex flex-wrap gap-3 mt-auto">
                 {doc.links.map((link, j) => (
                   <a 
                     key={j}
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-zinc-800 text-zinc-300 rounded-xl text-xs font-bold hover:bg-zinc-700 hover:text-white border border-zinc-700 transition-all"
+                    className="w-full inline-flex items-center justify-center gap-3 px-6 py-4 bg-zinc-800 text-white rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-violet-600 border border-zinc-700 hover:border-violet-500 transition-all shadow-xl"
                   >
                     {link.label}
-                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                     </svg>
                   </a>
                 ))}

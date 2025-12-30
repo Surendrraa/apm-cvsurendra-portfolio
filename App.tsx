@@ -1,14 +1,17 @@
+
 import React, { useState } from 'react';
 import { Navbar } from './components/Navbar.tsx';
 import { Hero } from './components/Hero.tsx';
 import { About } from './components/About.tsx';
 import { Portfolio } from './components/Portfolio.tsx';
+import { VibeKodesSection } from './components/VibeKodesSection.tsx';
 import { Documentation } from './components/Documentation.tsx';
 import { Experience } from './components/Experience.tsx';
 import { Skills } from './components/Skills.tsx';
 import { Footer } from './components/Footer.tsx';
 import { PRDModal } from './components/PRDModal.tsx';
 import { BackgroundSnake } from './components/BackgroundSnake.tsx';
+import { ChatBot } from './components/ChatBot.tsx';
 import { CaseStudy } from './types.ts';
 
 const App: React.FC = () => {
@@ -22,11 +25,13 @@ const App: React.FC = () => {
         <Hero />
         <About />
         <Portfolio onSelectCaseStudy={setSelectedCaseStudy} />
+        <VibeKodesSection />
         <Documentation />
         <Experience />
         <Skills />
       </main>
       <Footer />
+      <ChatBot />
       
       {selectedCaseStudy && (
         <PRDModal 

@@ -29,7 +29,7 @@ export const Portfolio: React.FC<Props> = ({ onSelectCaseStudy }) => {
               <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-[#8B5CF6] transition-colors">
                 {study.title}
               </h3>
-              <p className="text-zinc-400 mb-6 flex-grow leading-relaxed">{study.oneLineDescription}</p>
+              <p className="text-sm text-zinc-400 mb-6 flex-grow leading-relaxed">{study.oneLineDescription}</p>
               
               <div className="space-y-4 mb-8">
                 <div className="p-5 bg-zinc-950/50 rounded-2xl border border-zinc-800">

@@ -1,6 +1,32 @@
+
 import { CaseStudy, Experience, Skill } from './types';
 
-export const PROFESSIONAL_SUMMARY = `Associate Product Manager–aspirant with 1.6 years of experience in a software product environment as an Associate QA Engineer at Vegastack. Strong exposure to product requirements, user stories, acceptance criteria, Agile execution, and cross-functional collaboration. Complements professional experience with hands-on product building as the Product Lead for VibeKodes, demonstrating real-world product thinking, user focus, and ownership mindset.`;
+export const PROFESSIONAL_SUMMARY = `Associate Product Manager–aspirant with 1.6 years of experience in a software product environment as an Associate QA Engineer at Vegastack. Strong exposure to product requirements, user stories, acceptance criteria, Agile execution, and cross-functional collaboration. Complements professional experience with hands-on product building as the Product Lead for VibeKodes, demonstrating real-world product thinking, user focus, and ownership mindset in the Edu-Tech space.`;
+
+export const VIBEKODES_PRODUCT = {
+  title: "VibeKodes",
+  subtitle: "AI-Powered Edu-Tech Revolution",
+  mission: "A 100% free, AI-driven platform transforming passive learning into active building through the 'VibeKoding' methodology.",
+  role: "Product Lead & Visionary",
+  methodology: {
+    title: "The VibeKoding Methodology",
+    points: [
+      { title: "Learn by Building", description: "Hands-on construction of real, full-stack applications from the ground up, moving beyond traditional theory." },
+      { title: "Prompt-Driven Development", description: "Mastering the art of AI collaboration. Users learn to solve problems by mastering intelligent AI prompts." },
+      { title: "Product Lifecycle Mastery", description: "Experience the full journey of defining, building, and launching a functional product, cementing the mindset of a true owner." }
+    ]
+  },
+  mindsets: [
+    { title: "Vibe of Logic", description: "Deconstructing complex problems into manageable, step-by-step solutions." },
+    { title: "Vibe of Clarity", description: "Writing clean, readable, and highly maintainable code for future-ready engineering." }
+  ],
+  achievements: [
+    { title: "Future-Proof Career", description: "Bridging the gap between knowing concepts and building software with AI as a co-pilot." }
+  ],
+  links: [
+    { label: "Visit Platform", url: "https://vibekodes.com" }
+  ]
+};
 
 export const CASE_STUDIES: CaseStudy[] = [
   {
@@ -100,7 +126,7 @@ export const EXPERIENCES: Experience[] = [
     period: '2025 - Present',
     isCurrent: true,
     description: [
-      'Spearheading the roadmap for "Edu Future VibeKoding", a gamified edutech platform targeting future-ready skills.',
+      'Spearheading the roadmap for "Edu Future VibeKoding", a gamified Edu-Tech platform targeting future-ready skills.',
       'Owning product discovery, user research, and wireframing for core learning loops.',
       'Implementing feedback-driven iterations to increase student retention through gamification.'
     ]
@@ -137,6 +163,6 @@ export const SKILLS: Skill[] = [
   },
   {
     category: 'Area of Interest',
-    items: ['Technical Product Design', 'SaaS products', 'AI-based products', 'Workflow automation', 'EdTech Innovation']
+    items: ['Technical Product Design', 'SaaS products', 'AI-based products', 'Workflow automation', 'Edu-Tech Innovation', 'FinTech']
   }
 ];
