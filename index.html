@@ -49,134 +49,80 @@
     </div>
 
     <script type="text/javascript">
-      // 1. Robust process.env shim
-      window.process = window.process || {};
-      window.process.env = { 
-        NODE_ENV: 'production',
-        ...(window.process.env || {}) 
-      };
+      window.process = { env: { NODE_ENV: 'production' } };
 
       const moduleCache = new Map();
+      const projectFiles = [
+        'index.tsx', 'App.tsx', 'types.ts', 'constants.tsx',
+        'components/Navbar.tsx', 'components/Hero.tsx', 'components/About.tsx',
+        'components/Portfolio.tsx', 'components/Documentation.tsx', 'components/Experience.tsx',
+        'components/Skills.tsx', 'components/Footer.tsx', 'components/PRDModal.tsx',
+        'components/ChatBot.tsx', 'components/SectionHeading.tsx', 'components/MobileScreenRenderer.tsx',
+        'components/EmailComposer.tsx', 'services/geminiService.ts'
+      ];
 
-      /**
-       * Resolves relative paths like './App.tsx' to absolute URLs
-       */
       function resolvePath(base, relative) {
         return new URL(relative, base).href;
       }
 
-      /**
-       * Checks if a path has a valid file extension
-       */
-      function hasExtension(path) {
-        const lastPart = path.split('/').pop();
-        return lastPart.includes('.');
+      function getCorrectExtension(path) {
+        // Find which project file matches the relative path
+        const cleanPath = path.replace(/^\.\//, '').replace(/\.(tsx|ts|js)$/, '');
+        const match = projectFiles.find(f => f.startsWith(cleanPath) || f.endsWith(cleanPath));
+        return match || path;
       }
 
-      /**
-       * Recursively loads and transpiles modules
-       */
       async function loadModule(url) {
         const absoluteUrl = new URL(url, window.location.href).href;
         if (moduleCache.has(absoluteUrl)) return moduleCache.get(absoluteUrl);
 
         const status = document.getElementById('status-text');
-        if (status) status.innerText = `Fetching: ${url.split('/').pop()}`;
+        if (status) status.innerText = `Loading: ${url.split('/').pop()}`;
 
         const response = await fetch(absoluteUrl);
-        if (!response.ok) {
-          throw new Error(`Failed to fetch ${url} (Status: ${response.status})`);
-        }
+        if (!response.ok) throw new Error(`404: ${url}`);
         let code = await response.text();
 
-        // 2. Resolve internal imports
-        // Matches: import ... from './path' or export ... from './path'
         const importRegex = /(from|import)\s+['"](\.\.?\/[^'"]+)['"]/g;
+        const matches = [...code.matchAll(importRegex)];
         
-        // Find all local imports and process them first
-        const localImports = [...code.matchAll(importRegex)];
-        for (const match of localImports) {
+        for (const match of matches) {
           const originalPath = match[2];
+          const guessedPath = getCorrectExtension(originalPath);
+          const resolvedAbsolute = resolvePath(absoluteUrl, guessedPath);
           
-          // Fix: Handle cases like '../constants' where dots are at the start
-          // but there's no actual file extension at the end.
-          let targetPath = originalPath;
-          if (!hasExtension(originalPath)) {
-            // Attempt .tsx first, as most files in this project are .tsx
-            targetPath = `${originalPath}.tsx`;
-          }
-
-          const resolvedAbsolute = resolvePath(absoluteUrl, targetPath);
-          
-          try {
-            const blobUrl = await loadModule(resolvedAbsolute);
-            // Replace the path in the code with the Blob URL
-            code = code.split(`'${originalPath}'`).join(`'${blobUrl}'`);
-            code = code.split(`"${originalPath}"`).join(`"${blobUrl}"`);
-          } catch (e) {
-            // Fallback: If .tsx fails, try .ts
-            if (targetPath.endsWith('.tsx')) {
-               const tsPath = targetPath.replace('.tsx', '.ts');
-               const resolvedTs = resolvePath(absoluteUrl, tsPath);
-               const blobUrl = await loadModule(resolvedTs);
-               code = code.split(`'${originalPath}'`).join(`'${blobUrl}'`);
-               code = code.split(`"${originalPath}"`).join(`"${blobUrl}"`);
-            } else {
-               throw e;
-            }
-          }
+          const blobUrl = await loadModule(resolvedAbsolute);
+          code = code.split(`'${originalPath}'`).join(`'${blobUrl}'`);
+          code = code.split(`"${originalPath}"`).join(`"${blobUrl}"`);
         }
 
-        if (status) status.innerText = `Transpiling: ${url.split('/').pop()}`;
-
-        // 3. Transpile using Babel Standalone
         try {
           const transpiled = Babel.transform(code, {
-            presets: [
-              ['typescript', { isTSX: true, allExtensions: true }],
-              ['react', { runtime: 'automatic' }]
-            ],
-            filename: url,
-            babelrc: false,
-            configFile: false
+            presets: [['typescript', { isTSX: true, allExtensions: true }], ['react', { runtime: 'automatic' }]],
+            filename: url
           }).code;
 
-          // 4. Create and cache Blob URL
           const blob = new Blob([transpiled], { type: 'application/javascript' });
           const blobUrl = URL.createObjectURL(blob);
           moduleCache.set(absoluteUrl, blobUrl);
           return blobUrl;
-        } catch (babelErr) {
-          throw new Error(`Babel Error in ${url.split('/').pop()}: ${babelErr.message}`);
+        } catch (err) {
+          throw new Error(`Babel: ${url.split('/').pop()} - ${err.message}`);
         }
       }
 
-      // Entry Point Execution
       (async () => {
         try {
           const entryBlobUrl = await loadModule('./index.tsx');
-          
           const script = document.createElement('script');
           script.type = 'module';
           script.src = entryBlobUrl;
           document.head.appendChild(script);
-          
-          console.log("🚀 Portfolio Engine Started Successfully.");
         } catch (err) {
-          console.error("Critical Boot Error:", err);
-          const loaderIcon = document.getElementById('loader-icon');
-          const status = document.getElementById('status-text');
-          const errorBox = document.getElementById('error-box');
-          
-          if (loaderIcon) loaderIcon.style.display = 'none';
-          if (status) {
-            status.innerText = "Engine Stall";
-            status.style.color = "#f87171";
-          }
-          if (errorBox) {
-            errorBox.style.display = 'block';
-            errorBox.innerText = `Error Context:\n${err.message}\n\nThis usually happens because an import path is incorrect or a file is missing. Check the network tab in dev tools.`;
-          }
+          document.getElementById('loader-icon').style.display = 'none';
+          document.getElementById('status-text').innerText = "Boot Failed";
+          document.getElementById('error-box').style.display = 'block';
+          document.getElementById('error-box').innerText = err.message;
         }
       })();
     </script>

@@ -1,10 +1,14 @@
 
 import { GoogleGenAI } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-
 export async function getPortfolioResponse(userMessage: string) {
   try {
+    // Initialize inside the function to ensure process.env.API_KEY is available and valid
+    if (!process.env.API_KEY) {
+      throw new Error("API Key is missing from environment.");
+    }
+    
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
       contents: userMessage,
