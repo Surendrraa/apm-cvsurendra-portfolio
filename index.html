@@ -9,45 +9,97 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- SystemJS & Babel for reliable runtime transpilation -->
+    <script src="https://cdn.jsdelivr.net/npm/systemjs@6.15.1/dist/system.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
     <script>
-      // Shim process.env for browser environments where it might not be defined by the host
+      // Safety shim for process.env in browser environments
       window.process = window.process || { env: {} };
+      window.process.env = window.process.env || {};
+      window.process.env.NODE_ENV = window.process.env.NODE_ENV || 'production';
+
+      // Intercept SystemJS fetches to transpile TSX files on the fly
+      const systemFetch = System.constructor.prototype.fetch;
+      System.constructor.prototype.fetch = async function(url, options) {
+        const response = await fetch(url, options);
+        // Only transpile local .ts and .tsx files
+        if (!url.match(/\.(tsx?|ts)$/) || url.includes('node_modules') || url.includes('esm.sh')) {
+          return response;
+        }
+
+        const source = await response.text();
+        try {
+          const transformed = Babel.transform(source, {
+            presets: ['react', 'typescript'],
+            plugins: [['transform-modules-systemjs']],
+            filename: url
+          }).code;
+
+          return new Response(transformed, {
+            headers: { 'Content-Type': 'application/javascript' }
+          });
+        } catch (err) {
+          console.error(`Babel Transpilation Error in ${url}:`, err);
+          return response;
+        }
+      };
     </script>
+
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #09090b;
-            color: #fafafa;
-        }
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #09090b;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #27272a;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #3f3f46;
-        }
+        body { margin: 0; background-color: #09090b; color: #fafafa; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #09090b; }
+        ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
+
+    <script type="systemjs-importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh/react@19.0.0",
+        "react-dom": "https://esm.sh/react-dom@19.0.0",
+        "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
+        "@google/genai": "https://esm.sh/@google/genai@1.34.0"
+      }
+    }
+    </script>
 <script type="importmap">
 {
   "imports": {
-    "react": "https://esm.sh/react@19.0.0",
-    "react/": "https://esm.sh/react@19.0.0/",
-    "react-dom": "https://esm.sh/react-dom@19.0.0",
-    "react-dom/": "https://esm.sh/react-dom@19.0.0/",
-    "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
-    "@google/genai": "https://esm.sh/@google/genai@1.34.0"
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.34.0"
   }
 }
 </script>
 </head>
 <body>
-    <div id="root"></div>
-    <script type="module" src="index.tsx"></script>
+    <div id="root">
+        <div style="height: 100vh; display: flex; align-items: center; justify-content: center; background: #09090b; color: #fafafa;">
+            <div style="text-align: center;">
+                <div style="width: 44px; height: 44px; border: 3px solid #1a1a1a; border-top-color: #8B5CF6; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 24px;"></div>
+                <p style="font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: #52525b;">Launching APM Portfolio</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+      // Start the application through SystemJS
+      System.import('./index.tsx').catch(err => {
+        console.error('Application failed to boot:', err);
+        document.getElementById('root').innerHTML = `
+          <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh; padding:20px; color:#f87171; font-family:sans-serif; text-align:center;">
+            <svg style="width:48px; height:48px; margin-bottom:16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+            <h1 style="font-size:18px; font-weight:bold; margin-bottom:8px;">Failed to start application</h1>
+            <p style="font-size:14px; opacity:0.7; max-width:400px; line-height:1.5;">${err.message}</p>
+            <button onclick="window.location.reload()" style="margin-top:24px; padding:10px 20px; background:#27272a; color:white; border:none; border-radius:8px; cursor:pointer; font-size:12px; font-weight:bold;">Retry Connection</button>
+          </div>
+        `;
+      });
+    </script>
 </body>
 </html>
