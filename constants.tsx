@@ -95,28 +95,28 @@ export const DOCUMENTATION_RESOURCES = [
 
 export const EXPERIENCES: Experience[] = [
   {
-    company: 'VibeKodes (Learning Initiative)',
-    role: 'Project Product Experience – VibeKodes 2025 – Present',
-    period: '2025 - Present',
-    isCurrent: true,
-    description: [
-      'Led a public learning platform (vibekodes.com) to practice product management concepts in real-world scenarios.',
-      'Identified student learning challenges and translated them into product improvement ideas.',
-      'Worked on user journeys, feature requirements, and content structure.',
-      'Prioritized enhancements based on user feedback and usability observations.',
-      'Continuously iterated the platform to improve learning experience and clarity.',
-      'Maintained this project as a product learning initiative, not a commercial venture.'
-    ]
-  },
-  {
     company: 'Vegastack',
     role: 'Associate QA Engineer (Transitioning to Product)',
     period: '2024 - Present',
+    isCurrent: true,
     description: [
       'Ensuring product integrity for startup-scale SaaS solutions, collaborating with PMs to refine PRDs and user journeys.',
       'Applying analytical thinking to requirement analysis, acceptance criteria definition, and Agile execution.',
       'Bridging technical bugs and UX improvements to ensure the product vision aligns with user expectations.',
       'Actively involved in product discovery sessions and feature prioritization using RICE frameworks.'
+    ]
+  },
+  {
+    company: 'VibeKodes',
+    role: 'Developed VibeKodes – Learning Initiative',
+    period: '',
+    description: [
+      'Led a public learning platform to practice product management concepts in real-world scenarios.',
+      'Identified student learning challenges and translated them into improvement ideas.',
+      'Worked on user journeys, feature requirements, and content structure.',
+      'Prioritized enhancements based on user feedback and usability observations.',
+      'Continuously iterated the platform to improve learning experience and clarity.',
+      'Maintained this initiative as a learning path, not a commercial venture.'
     ]
   }
 ];
@@ -144,10 +144,9 @@ export const SKILLS: Skill[] = [
   }
 ];
 
-// Added VIBEKODES_PRODUCT to fix the missing export error in VibeKodesSection.tsx
 export const VIBEKODES_PRODUCT = {
   title: 'VibeKodes',
-  subtitle: 'Project Product Experience',
+  subtitle: 'Learning Initiative',
   mission: 'Empowering students with a public learning platform to practice product management concepts in real-world scenarios.',
   methodology: {
     title: 'Product Methodology',
@@ -158,7 +157,7 @@ export const VIBEKODES_PRODUCT = {
     ]
   },
   mindsets: [
-    { title: 'Learning First', description: 'Project maintained as a product learning initiative.' },
+    { title: 'Learning First', description: 'Maintained as a product learning initiative.' },
     { title: 'Iterative Growth', description: 'Improving clarity and experience through constant feedback.' }
   ],
   achievements: [

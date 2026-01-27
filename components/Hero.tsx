@@ -18,23 +18,6 @@ export const Hero: React.FC = () => {
     }
   };
 
-  const scrollToContact = (e: React.MouseEvent) => {
-    e.preventDefault();
-    const element = document.getElementById('contact');
-    if (element) {
-      const offset = 80;
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = element.getBoundingClientRect().top;
-      const elementPosition = elementRect - bodyRect;
-      const offsetPosition = elementPosition - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-    }
-  };
-
   return (
     <section className="pt-32 md:pt-48 pb-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto text-center md:text-left grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -65,8 +48,8 @@ export const Hero: React.FC = () => {
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
             </a>
             <a 
-              href="#contact" 
-              onClick={scrollToContact}
+              href="#work" 
+              onClick={scrollToWork}
               className="px-8 py-4 bg-zinc-900 hover:bg-zinc-800 text-white border border-zinc-700 rounded-2xl font-bold transition-all text-center flex items-center justify-center"
             >
               Let's Talk Product

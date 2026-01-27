@@ -17,13 +17,13 @@ export const Experience: React.FC = () => {
                     {exp.role}
                   </h3>
                   <div className="text-lg md:text-xl font-bold text-indigo-400 mb-3">
-                    {exp.company === 'VibeKodes (Learning Initiative)' ? (
-                      <a href="https://vibekodes.com" target="_blank" rel="noopener noreferrer" className="hover:text-indigo-300 transition-colors">VibeKodes</a>
-                    ) : exp.company}
+                    {exp.company}
                   </div>
-                  <span className="inline-block text-[10px] font-black text-zinc-500 uppercase tracking-widest px-3 py-1 bg-zinc-900 border border-zinc-800 rounded-lg">
-                    {exp.period}
-                  </span>
+                  {exp.period && (
+                    <span className="inline-block text-[10px] font-black text-zinc-500 uppercase tracking-widest px-3 py-1 bg-zinc-900 border border-zinc-800 rounded-lg">
+                      {exp.period}
+                    </span>
+                  )}
                 </div>
                 <div className="relative md:w-1/2 md:pl-12 pt-1.5">
                   <div className="absolute -left-[35px] md:-left-[9px] top-3.5 w-4 h-4 rounded-full bg-indigo-600 ring-4 ring-indigo-500/10 shadow-[0_0_12px_rgba(79,70,229,0.3)]"></div>
@@ -35,6 +35,23 @@ export const Experience: React.FC = () => {
                       </li>
                     ))}
                   </ul>
+                  {exp.company === 'VibeKodes' && (
+                    <div className="mt-8 p-6 bg-indigo-500/5 border border-indigo-500/10 rounded-2xl group/link transition-all hover:bg-indigo-500/10">
+                       <p className="text-[10px] text-zinc-500 font-black uppercase tracking-[0.2em] mb-3">Direct Access</p>
+                       <a 
+                        href="https://vibekodes.com/" 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="flex items-center gap-3 text-white font-bold text-base hover:text-indigo-400 transition-colors"
+                       >
+                         Visit VibeKodes: https://vibekodes.com/
+                         <svg className="w-5 h-5 group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                         </svg>
+                       </a>
+                       <p className="text-[10px] text-zinc-600 font-medium uppercase mt-2">Public EdTech Learning Platform | Outside full-time role</p>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
