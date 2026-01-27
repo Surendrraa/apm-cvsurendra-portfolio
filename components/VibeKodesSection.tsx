@@ -8,8 +8,8 @@ export const VibeKodesSection: React.FC = () => {
     <section id="vibekodes" className="py-24 px-4 sm:px-6 lg:px-8 bg-zinc-950/20">
       <div className="max-w-7xl mx-auto">
         <SectionHeading 
-          title="Product Experience" 
-          subtitle="Building VibeKodes from zero to one: Leading the future of AI-driven Edu-Tech." 
+          title="Product Leadership" 
+          subtitle="Leading VibeKodes from zero to one: Orchestrating the future of AI-driven Edu-Tech." 
         />
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
@@ -29,7 +29,7 @@ export const VibeKodesSection: React.FC = () => {
             </p>
 
             <div className="space-y-6">
-              <h4 className="text-xs font-black text-zinc-500 uppercase tracking-[0.3em]">The VibeKoding Methodology</h4>
+              <h4 className="text-xs font-black text-zinc-500 uppercase tracking-[0.3em]">{VIBEKODES_PRODUCT.methodology.title}</h4>
               <div className="grid gap-4">
                 {VIBEKODES_PRODUCT.methodology.points.map((point, idx) => (
                   <div key={idx} className="bg-zinc-900/40 border border-zinc-800/50 p-8 rounded-[2.5rem] hover:border-violet-500/20 transition-all group">
@@ -86,7 +86,7 @@ export const VibeKodesSection: React.FC = () => {
                           </div>
                           <div class="animate-fade-up-reveal">
                             <h4 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white italic uppercase tracking-tighter leading-[1.1] animate-text-glow px-4 mx-auto">
-                              Dream at night,<br /> Build by Morning,<br /> Deploy by evening
+                              Vision at night,<br /> Lead by Morning,<br /> Impact by evening
                             </h4>
                           </div>
                         </div>
@@ -114,7 +114,7 @@ export const VibeKodesSection: React.FC = () => {
                   rel="noopener noreferrer"
                   className="w-full flex items-center justify-center gap-3 px-8 py-5 bg-violet-600 hover:bg-violet-500 text-white rounded-[2rem] font-bold transition-all shadow-xl shadow-violet-600/20 active:scale-[0.98] group/btn"
                 >
-                  Explore VibeKodes Live
+                  Explore Strategic Impact
                   <svg className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                   </svg>

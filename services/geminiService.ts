@@ -1,22 +1,11 @@
+
 import { GoogleGenAI } from "@google/genai";
-import { PROFESSIONAL_SUMMARY, CASE_STUDIES, EXPERIENCES, SKILLS } from '../constants';
+import { PROFESSIONAL_SUMMARY, CASE_STUDIES, EXPERIENCES, SKILLS, VIBEKODES_PRODUCT } from '../constants';
 
-// Helper to get AI instance safely
-const getAiClient = () => {
-  const apiKey = process.env.API_KEY;
-  if (!apiKey) {
-    console.warn("API_KEY is not defined in process.env. Chat features may be limited.");
-    return null;
-  }
-  return new GoogleGenAI({ apiKey });
-};
-
-const ai = getAiClient();
-
+// Fixed Gemini AI service to follow strict initialization guidelines
 export async function getPortfolioResponse(prompt: string) {
-  if (!ai) {
-    return "I'm currently operating in offline mode as my AI core is being calibrated. Please check back shortly!";
-  }
+  // Always create a new instance right before making an API call to ensure use of correct API key
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
   try {
     const response = await ai.models.generateContent({
@@ -24,32 +13,34 @@ export async function getPortfolioResponse(prompt: string) {
       contents: prompt,
       config: {
         systemInstruction: `You are the AI Twin of CV Surendra, an aspiring Associate Product Manager. 
-        Current Context: 1.6 years as Associate QA Engineer @ Vegastack; Product Lead @ VibeKodes.
+        Current Context: 1.7 years as Associate QA Engineer @ Vegastack; transitioning into Product Management.
 
         TONE & FORMATTING:
-        - Professional, insightful, and concise. 
-        - Use **bold text** for key achievements or product names.
+        - Professional, strategic, and concise. 
+        - Use **bold text** for key product strategies or metrics.
         - Use bullet points (*) for lists.
-        - Avoid long walls of text; keep paragraphs short.
-        - Do not use hashtags.
+        - Focus on Product Discovery and Strategy.
         
         KNOWLEDGE BASE:
         - Summary: ${PROFESSIONAL_SUMMARY}
         - Case Studies: ${JSON.stringify(CASE_STUDIES)}
         - Experience: ${JSON.stringify(EXPERIENCES)}
         - Skills: ${JSON.stringify(SKILLS)}
+        - VibeKodes Product: ${JSON.stringify(VIBEKODES_PRODUCT)}
         
         GOAL:
-        Answer user queries to demonstrate your PM maturity. 
-        - If asked about Rapido: Highlight the **"Atomic Split"** innovation and how it solves user cost pain points.
-        - If asked about WhatsApp: Focus on the technical feasibility of **on-device LLMs** for privacy.
-        - If asked about Vegastack: Emphasize your role in bridging **QA and Product Discovery**.
-        - If asked about VibeKodes: Speak like a founder about **"Learn by Building"** and **Edu-Tech** innovation.`,
+        Answer user queries to demonstrate your PM leadership and discovery maturity. 
+        - If asked about Rapido: Highlight the **"Atomic Split"** strategy and how it optimizes the C2C marketplace efficiency.
+        - If asked about WhatsApp: Focus on the product decision-making behind **on-device LLMs** for privacy-first user experiences.
+        - If asked about Vegastack: Emphasize your role in **Strategic Discovery**, requirement analysis, and bridging the gap between QA and Product Ownership.
+        - If asked about VibeKodes: Discuss the **Product Methodology** (Discovery, Definition, Delivery) and the mission to empower developers through AI-driven experiences.`,
       },
     });
-    return response.text;
+    
+    // Access the .text property directly as a getter, not a method
+    return response.text || "I'm sorry, I couldn't formulate a response at the moment.";
   } catch (error) {
     console.error("Gemini AI Error:", error);
-    return "I'm currently recalibrating my product vision. Please try asking again in a moment!";
+    return "I'm currently recalibrating my product strategy. Please try asking again in a moment!";
   }
 }

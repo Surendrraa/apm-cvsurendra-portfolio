@@ -2,9 +2,7 @@
 import React, { useState } from 'react';
 import { Navbar } from './components/Navbar.tsx';
 import { Hero } from './components/Hero.tsx';
-import { About } from './components/About.tsx';
 import { Portfolio } from './components/Portfolio.tsx';
-import { VibeKodesSection } from './components/VibeKodesSection.tsx';
 import { Documentation } from './components/Documentation.tsx';
 import { Experience } from './components/Experience.tsx';
 import { Skills } from './components/Skills.tsx';
@@ -23,9 +21,7 @@ const App: React.FC = () => {
       <Navbar />
       <main className="relative z-10 space-y-0">
         <Hero />
-        <About />
         <Portfolio onSelectCaseStudy={setSelectedCaseStudy} />
-        <VibeKodesSection />
         <Documentation />
         <Experience />
         <Skills />

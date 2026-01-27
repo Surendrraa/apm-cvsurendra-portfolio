@@ -1,40 +1,14 @@
-
 import { CaseStudy, Experience, Skill } from './types';
 
-export const PROFESSIONAL_SUMMARY = `Associate Product Manager–aspirant with 1.6 years of experience in a software product environment as an Associate QA Engineer at Vegastack. Strong exposure to product requirements, user stories, acceptance criteria, Agile execution, and cross-functional collaboration. Complements professional experience with hands-on product building as the Product Lead for VibeKodes, demonstrating real-world product thinking, user focus, and ownership mindset in the Edu-Tech space.`;
-
-export const VIBEKODES_PRODUCT = {
-  title: "VibeKodes",
-  subtitle: "AI-Powered Edu-Tech Revolution",
-  mission: "A 100% free, AI-driven platform transforming passive learning into active building through the 'VibeKoding' methodology.",
-  role: "Product Lead & Visionary",
-  methodology: {
-    title: "The VibeKoding Methodology",
-    points: [
-      { title: "Learn by Building", description: "Hands-on construction of real, full-stack applications from the ground up, moving beyond traditional theory." },
-      { title: "Prompt-Driven Development", description: "Mastering the art of AI collaboration. Users learn to solve problems by mastering intelligent AI prompts." },
-      { title: "Product Lifecycle Mastery", description: "Experience the full journey of defining, building, and launching a functional product, cementing the mindset of a true owner." }
-    ]
-  },
-  mindsets: [
-    { title: "Vibe of Logic", description: "Deconstructing complex problems into manageable, step-by-step solutions." },
-    { title: "Vibe of Clarity", description: "Writing clean, readable, and highly maintainable code for future-ready engineering." }
-  ],
-  achievements: [
-    { title: "Future-Proof Career", description: "Bridging the gap between knowing concepts and building software with AI as a co-pilot." }
-  ],
-  links: [
-    { label: "Visit Platform", url: "https://vibekodes.com" }
-  ]
-};
+export const PROFESSIONAL_SUMMARY = `Associate Product Manager–aspirant with 1.7 years of experience in a software product environment as an Associate QA Engineer at Vegastack. I leverage a deep understanding of product integrity to lead strategic discovery and feature definition.`;
 
 export const CASE_STUDIES: CaseStudy[] = [
   {
     id: 'rapido-pooling',
-    title: 'Rapido Ride Pooling Feature',
-    oneLineDescription: 'A C2C marketplace enabling commuters to host upcoming journeys and share costs through an automated atomic payment split.',
+    title: 'Rapido Ride Pooling Strategy',
+    oneLineDescription: 'Leading the design of a C2C marketplace enabling commuters to host upcoming journeys and share costs through an automated atomic payment split.',
     problem: 'High individual ride costs, no way to plan shared rides in advance, and inefficient vehicle utilization during Bangalore peak hours.',
-    innovation: 'The "Atomic Split": User-controlled matching where driver booking only triggers once the pool reaches 100% capacity/payment.',
+    innovation: 'The "Atomic Split": A strategic matching mechanism where driver booking only triggers once the pool reaches 100% capacity/payment.',
     impact: '₹500-2,600 monthly savings per user, 15% increase in user engagement.',
     tags: ['Marketplace', 'Mobility', 'Fintech'],
     notionUrl: 'https://www.notion.so/Rapido-Ride-Pooling-Feature-2d83d7a7290480b6baf3c6380a06c2b4?source=copy_link',
@@ -44,7 +18,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     fullSpecs: [
       {
-        title: '6-STEP CORE FEATURE FLOW',
+        title: 'STRATEGIC FEATURE FLOW',
         type: 'screens',
         screens: [
           { title: 'Ride Pool Home', description: 'Central hub for posting/finding rides with scheduled summaries and quick stats.', type: 'home' },
@@ -59,10 +33,10 @@ export const CASE_STUDIES: CaseStudy[] = [
   },
   {
     id: 'whatsapp-ai',
-    title: 'WhatsApp Smart Reply Feature',
-    oneLineDescription: 'On-device LLM integration for generating hyper-personalized, context-aware reply chips that mimic user tone.',
+    title: 'WhatsApp Smart Reply Strategy',
+    oneLineDescription: 'Leading the integration of on-device LLMs for generating hyper-personalized, context-aware reply chips that mimic user tone.',
     problem: 'Generic smart replies ("OK", "No") feel robotic and fail to capture conversational nuance or Hinglish slang.',
-    innovation: 'Personalized Style Weights: AI analyzes past chat history locally to generate reply suggestions that match YOUR personal tone.',
+    innovation: 'Personalized Style Weights: A product-led approach where AI analyzes past chat history locally to generate reply suggestions that match YOUR personal tone.',
     impact: '40% of replies sent via smart suggestions, 90% faster response time.',
     tags: ['Generative AI', 'NLP', 'Mobile Product'],
     notionUrl: 'https://www.notion.so/WhatsApp-Smart-Reply-Feature-2d83d7a7290480f8af95ce8447897c03?source=copy_link',
@@ -72,7 +46,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     ],
     fullSpecs: [
       {
-        title: 'CORE PRODUCT FLOW',
+        title: 'PRODUCT ARCHITECTURE',
         type: 'screens',
         screens: [
           { title: 'Smart Inbox', description: 'AI-ready indicators for pending replies in the contacts list.', type: 'home' },
@@ -121,25 +95,28 @@ export const DOCUMENTATION_RESOURCES = [
 
 export const EXPERIENCES: Experience[] = [
   {
-    company: 'VibeKodes',
-    role: 'Product Lead',
+    company: 'VibeKodes (Learning Initiative)',
+    role: 'Project Product Experience – VibeKodes 2025 – Present',
     period: '2025 - Present',
     isCurrent: true,
     description: [
-      'Spearheading the roadmap for "Edu Future VibeKoding", a gamified Edu-Tech platform targeting future-ready skills.',
-      'Owning product discovery, user research, and wireframing for core learning loops.',
-      'Implementing feedback-driven iterations to increase student retention through gamification.'
+      'Led a public learning platform (vibekodes.com) to practice product management concepts in real-world scenarios.',
+      'Identified student learning challenges and translated them into product improvement ideas.',
+      'Worked on user journeys, feature requirements, and content structure.',
+      'Prioritized enhancements based on user feedback and usability observations.',
+      'Continuously iterated the platform to improve learning experience and clarity.',
+      'Maintained this project as a product learning initiative, not a commercial venture.'
     ]
   },
   {
     company: 'Vegastack',
-    role: 'Associate QA Engineer',
+    role: 'Associate QA Engineer (Transitioning to Product)',
     period: '2024 - Present',
-    isCurrent: true,
     description: [
-      'Ensuring product quality for startup-scale SaaS solutions, working directly with PMs to refine PRDs and user journeys.',
-      '1.6 years of hands-on experience in requirement analysis, acceptance criteria definition, and Agile execution.',
-      'Bridging technical bugs and UX improvements to maintain high standards of product integrity.'
+      'Ensuring product integrity for startup-scale SaaS solutions, collaborating with PMs to refine PRDs and user journeys.',
+      'Applying analytical thinking to requirement analysis, acceptance criteria definition, and Agile execution.',
+      'Bridging technical bugs and UX improvements to ensure the product vision aligns with user expectations.',
+      'Actively involved in product discovery sessions and feature prioritization using RICE frameworks.'
     ]
   }
 ];
@@ -154,8 +131,8 @@ export const SKILLS: Skill[] = [
     items: ['Agile Methodologies', 'Requirement Analysis', 'Acceptance Criteria', 'QA Auditing', 'Prioritization'] 
   },
   { 
-    category: 'Technical Toolkit', 
-    items: ['Excel', 'Cursor AI', 'SQL', 'VibeKoding', 'Anti Gravity', 'Figma', 'Jira', 'Notion', 'Mixpanel'] 
+    category: 'TECH & PM TOOLKIT', 
+    items: ['Excel', 'Cursor AI', 'Python & SQL', 'Figma', 'Jira', 'Notion', 'ClickUp'] 
   },
   {
     category: 'Career Skills',
@@ -163,6 +140,33 @@ export const SKILLS: Skill[] = [
   },
   {
     category: 'Area of Interest',
-    items: ['Technical Product Design', 'SaaS products', 'AI-based products', 'Workflow automation', 'Edu-Tech Innovation', 'FinTech']
+    items: ['Technical Product Design', 'SaaS products', 'AI-based products', 'Workflow automation', 'FinTech']
   }
 ];
+
+// Added VIBEKODES_PRODUCT to fix the missing export error in VibeKodesSection.tsx
+export const VIBEKODES_PRODUCT = {
+  title: 'VibeKodes',
+  subtitle: 'Project Product Experience',
+  mission: 'Empowering students with a public learning platform to practice product management concepts in real-world scenarios.',
+  methodology: {
+    title: 'Product Methodology',
+    points: [
+      { title: 'Discovery', description: 'Identifying student learning challenges through direct interaction.' },
+      { title: 'Definition', description: 'Translating challenges into user journeys and feature requirements.' },
+      { title: 'Delivery', description: 'Continuous iteration based on feedback and usability observations.' }
+    ]
+  },
+  mindsets: [
+    { title: 'Learning First', description: 'Project maintained as a product learning initiative.' },
+    { title: 'Iterative Growth', description: 'Improving clarity and experience through constant feedback.' }
+  ],
+  achievements: [
+    { title: 'Public Platform', description: 'Successfully launched and led the VibeKodes public learning hub.' },
+    { title: 'Feature Ownership', description: 'Managed end-to-end content structure and requirements.' },
+    { title: 'Strategic Roadmap', description: 'Prioritizing enhancements as a solo Product Developer.' }
+  ],
+  links: [
+    { url: 'https://vibekodes.com' }
+  ]
+};

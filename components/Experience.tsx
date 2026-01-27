@@ -17,7 +17,7 @@ export const Experience: React.FC = () => {
                     {exp.role}
                   </h3>
                   <div className="text-lg md:text-xl font-bold text-indigo-400 mb-3">
-                    {exp.company === 'VibeKodes' ? (
+                    {exp.company === 'VibeKodes (Learning Initiative)' ? (
                       <a href="https://vibekodes.com" target="_blank" rel="noopener noreferrer" className="hover:text-indigo-300 transition-colors">VibeKodes</a>
                     ) : exp.company}
                   </div>

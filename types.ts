@@ -1,4 +1,3 @@
-
 export interface FeatureDetail {
   label: string;
   value: string;

@@ -4,7 +4,7 @@ import { getPortfolioResponse } from '../services/geminiService';
 export const ChatBot: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<{ role: 'user' | 'ai', text: string }[]>([
-    { role: 'ai', text: 'Hi! I am the AI Twin of CV Surendra. Ask me anything about my product journey, Vegastack experience, or VibeKodes!' }
+    { role: 'ai', text: 'Hi! I am the AI Twin of CV Surendra. Ask me anything about my product journey or Vegastack experience!' }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -31,9 +31,6 @@ export const ChatBot: React.FC = () => {
 
   const formatMessage = (text: string) => {
     // Basic markdown processing for bold and line breaks
-    // 1. Handle Bold (**text**)
-    // 2. Handle line breaks
-    // 3. Handle bullet points
     const lines = text.split('\n');
     return lines.map((line, i) => {
       let processedLine = line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
@@ -104,7 +101,7 @@ export const ChatBot: React.FC = () => {
                 className="bg-violet-600 hover:bg-violet-500 disabled:opacity-50 disabled:grayscale p-3 rounded-xl transition-all shadow-lg shadow-violet-600/20 active:scale-95 flex items-center justify-center"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="white">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                 </svg>
               </button>
             </div>

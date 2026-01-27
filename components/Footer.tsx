@@ -39,10 +39,7 @@ export const Footer: React.FC = () => {
             </a>
           </div>
           <div className="mt-24 pt-8 border-t border-zinc-900 w-full flex flex-col md:flex-row justify-between items-center gap-4 text-zinc-500 text-xs font-medium uppercase tracking-widest">
-            <p>© 2024-2025 Associate Product Manager Portfolio</p>
-            <div className="flex gap-8">
-              <a href="https://vibekodes.com" target="_blank" rel="noopener noreferrer" className="hover:text-indigo-400 transition-colors">VibeKodes</a>
-            </div>
+            <p>© 2024-2026 Associate Product Manager Portfolio</p>
           </div>
         </div>
       </div>
